@@ -1,3 +1,5 @@
+from colorama import init, Fore, Back, Style
+
 class XiangqiGame:
     """Represents the board for the game Xiangqi along with all of the movements and checks that are made during the game"""
 
@@ -20,8 +22,10 @@ class XiangqiGame:
 
     def play_game(self):
         self.print_board()
-        print("Player ", self._turn, "'s turn")
-        print("Input the location of the piece that you wish to move: ")
+        color = self._turn
+        p_color = color.upper()
+        print("Player " + p_color + "'S turn")
+        print("Which piece will you move?: ")
         move1 = input()
         print("Input the new location of the piece: ")
         move2 = input()
@@ -78,34 +82,45 @@ class XiangqiGame:
         Returns:
             Visualization of the game board for testing purposes
         """
+        init(autoreset=True)
 
-        print("   a", "    b", "    c", "    d", "    e", "    f", "    g", "    h", "    i")
-        print("-------------------------------------------------------")
+        print(" a", "   b", "   c", "   d", "   e", "   f", "   g", "   h", "   i")
 
-        for x in range(0, row1):
-            for y in range(0, col1):
+        for x in range(0, 10):
+            if x == 5:
+                print(Style.BRIGHT + Fore.BLUE + "~" * 44)
+
+
+            elif x == 1 or x == 8:
+                print(" |    |    |    |", u'\u2572', " | ", u'\u2571', "|    |    |    |")
+
+            elif x == 2 or x == 9:
+                print(" |    |    |    |", u'\u2571', " | ", u'\u2572', "|    |    |    |")
+
+            elif x != 0:
+                print(" |    |    |    |    |    |    |    |    |")
+
+            for y in range(0, 9):
                 space = self._board[x][y]
                 if self._board[x][y] == "":
-                    print("[ ", space, " ]", end="")
+                    if y == 8:
+                        print(" + ", end="")
+
+                    else:
+                        print(" + " + u'\u2500' * 2, end="")
                 else:
-                    print("[", space.get_ID(), "]", end="")
-            print(" ¦", x + 1, end = " ")
+                    if space.get_color() == "red":
+                        print(Style.BRIGHT + Back.RED + Fore.BLACK + " " + space.get_type() + " ", end="")
+                        if y != 8:
+                            print(u'\u2500' * 2, end="")
+
+                    else:
+                        print(Style.BRIGHT + Back.WHITE + Fore.BLACK + " " +  space.get_type() + " ", end="")
+                        if y != 8:
+                            print(u'\u2500' * 2, end="")
+
+            print("", x + 1, end = " ")
             print()
-
-        river = "~~~~~~~~~~~~~~~~~~~~~~~~~RIVER~~~~~~~~~~~~~~~~~~~~~~~~~"
-        print(river)
-
-        for a in range(row1, row2):
-            for b in range(0, col1):
-                space = self._board[a][b]
-                if self._board[a][b] == "":
-                    print("[ ", space, " ]", end="")
-                else:
-                    print("[", space.get_ID(), "]", end="")
-
-            print(" ¦", a + 1, end = " ")
-            print()
-        print("-------------------------------------------------------")
 
 
     def add_piece(self, piece_type, color, location):
@@ -1347,4 +1362,7 @@ if __name__ == '__main__':
     while my_game.get_game_state() == "UNFINISHED":
         my_game.play_game()
 
-    print("GAME HAS ENDED!")
+    winner = self._turn
+    p_winner = winner.upper()
+
+    print("Player " + p_winner + " won!")
