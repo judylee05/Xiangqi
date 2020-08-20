@@ -4,5 +4,5 @@ The XiangqiGame program is a Python implementation of Xiangqi (https://en.wikipe
 
 This program allows two players (Red vs. Black) to face each other in a round of Xiangqi. The locations on the game board are specified using algebraic notation with columns labeled a - i and rows labeled 1 - 10. Rows 1-5 are on the Red side and rows 6-10 are on the Black side. Red is the starting player and the game is over once a player wins the game by forcing the opponent's king/general into checkmate.
 
-![demo_gif](demo/demo_gif)
+![demo_gif](demo/demo_gif.gif)
 
